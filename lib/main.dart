@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 //models
 import 'package:flutter_app_sns01/main_model.dart';
 //packages
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 //options
@@ -65,7 +66,7 @@ class MyHomePage extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: mainModel.incrementCounter,
+        onPressed: () async => await mainModel.createUser(context: context),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
