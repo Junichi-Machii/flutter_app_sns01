@@ -8,6 +8,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 //options
 import 'firebase_options.dart';
 
+// constants
+import 'package:flutter_app_sns01/constants/routes.dart' as routes;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -53,13 +56,25 @@ class MyHomePage extends ConsumerWidget {
         title: Text(title),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          InkWell(
-            child: Icon(Icons.person),
+          ElevatedButton(
+            onPressed: () {
+              routes.toSignUpPage(context: context);
+            },
+            child: const Text('Sign Up'),
           ),
-          InkWell(
-            child: Icon(Icons.person),
+          const SizedBox(
+            height: 18,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              routes.toLoginPage(context: context);
+            },
+            child: const Text('Login'),
+          ),
+          const SizedBox(
+            height: 18,
           ),
           Center(
             child: mainModel.currentUser == null
