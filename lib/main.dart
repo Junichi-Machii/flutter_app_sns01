@@ -46,24 +46,35 @@ class MyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MainModel mainModel = ref.watch(mainProvider);
+    final TextEditingController emailEditingController =
+        TextEditingController(text: mainModel.email);
+    final TextEditingController passwordEditingController =
+        TextEditingController(text: mainModel.password);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '${mainModel.counter}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (text) => mainModel.email = text,
+            controller: emailEditingController,
+          ),
+          TextFormField(
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: true,
+            onChanged: (text) => mainModel.password = text,
+            controller: passwordEditingController,
+          ),
+          Center(
+            child: mainModel.currentUser == null
+                ? Text("null")
+                : Text('not null '),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async => await mainModel.createUser(context: context),
