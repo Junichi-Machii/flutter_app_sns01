@@ -16,6 +16,7 @@ class MainModel extends ChangeNotifier {
 
   String email = '';
   String password = '';
+  bool isObscure = true;
 
   Future<void> createFirestoreUser(
       {required BuildContext context, required String uid}) async {
@@ -48,5 +49,10 @@ class MainModel extends ChangeNotifier {
       print('Failed with error code: ${e.code}');
       print(e.message);
     }
+  }
+
+  void toggleObscure() {
+    isObscure = !isObscure;
+    notifyListeners();
   }
 }
