@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //models
-import 'package:flutter_app_sns01/main_model.dart';
+import 'package:flutter_app_sns01/models/main_model.dart';
 //packages
 
 import 'package:firebase_core/firebase_core.dart';
@@ -46,10 +46,6 @@ class MyHomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final MainModel mainModel = ref.watch(mainProvider);
-    final TextEditingController emailEditingController =
-        TextEditingController(text: mainModel.email);
-    final TextEditingController passwordEditingController =
-        TextEditingController(text: mainModel.password);
 
     return Scaffold(
       appBar: AppBar(
@@ -57,25 +53,13 @@ class MyHomePage extends ConsumerWidget {
         title: Text(title),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            onChanged: (text) => mainModel.email = text,
-            controller: emailEditingController,
+          InkWell(
+            child: Icon(Icons.person),
           ),
-          TextFormField(
-            keyboardType: TextInputType.visiblePassword,
-            onChanged: (text) => mainModel.password = text,
-            controller: passwordEditingController,
-            obscureText: mainModel.isObscure,
-            decoration: InputDecoration(
-              suffix: InkWell(
-                child: mainModel.isObscure
-                    ? const Icon(Icons.visibility_off)
-                    : const Icon(Icons.visibility),
-                onTap: () => mainModel.toggleObscure(),
-              ),
-            ),
+          InkWell(
+            child: Icon(Icons.person),
           ),
           Center(
             child: mainModel.currentUser == null
@@ -84,11 +68,6 @@ class MyHomePage extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async => await mainModel.createUser(context: context),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
