@@ -8,9 +8,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //domain
 import 'package:flutter_app_sns01/domain/firestore_users/firestore_user.dart';
 
-final mainProvider = ChangeNotifierProvider((ref) => MainModel());
+final signUpProvider = ChangeNotifierProvider((ref) => SignUpModel());
 
-class MainModel extends ChangeNotifier {
+class SignUpModel extends ChangeNotifier {
   int counter = 0;
   User? currentUser = null;
 
