@@ -4,6 +4,7 @@ import 'package:flutter_app_sns01/models/main_model.dart';
 //packages
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_app_sns01/views/login_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 //options
 import 'firebase_options.dart';
@@ -21,13 +22,15 @@ void main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final MainModel mainModel = ref.watch(mainProvider);
+
     String title = 'Flutter アプリケーション ';
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -36,20 +39,27 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: title),
+      home: mainModel.currentUser == null
+          ? LoginPage(
+              mainModel: mainModel,
+            )
+          : MyHomePage(
+              title: title,
+              mainModel: mainModel,
+            ),
     );
   }
 }
 
-class MyHomePage extends ConsumerWidget {
-  const MyHomePage({super.key, required this.title});
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key, required this.title, required this.mainModel});
 
   final String title;
-
+  final MainModel mainModel;
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final MainModel mainModel = ref.watch(mainProvider);
-
+  Widget build(
+    BuildContext context,
+  ) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -69,17 +79,12 @@ class MyHomePage extends ConsumerWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              routes.toLoginPage(context: context);
+              routes.toLoginPage(context: context, mainModel: mainModel);
             },
             child: const Text('Login'),
           ),
           const SizedBox(
             height: 18,
-          ),
-          Center(
-            child: mainModel.currentUser == null
-                ? Text("null")
-                : Text('not null '),
           ),
         ],
       ),

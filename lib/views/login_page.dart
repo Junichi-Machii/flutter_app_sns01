@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_sns01/models/login_model.dart';
+import 'package:flutter_app_sns01/models/main_model.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends ConsumerWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, required this.mainModel});
+  final MainModel mainModel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,18 +42,14 @@ class LoginPage extends ConsumerWidget {
               ),
             ),
           ),
-          Center(
-            child: loginModel.currentUser == null
-                ? Text("null")
-                : Text('not null '),
-          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async => await loginModel.login(),
+        onPressed: () async =>
+            await loginModel.login(context: context, mainModel: mainModel),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
